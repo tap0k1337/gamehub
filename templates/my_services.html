@@ -49,10 +49,11 @@
 			{% if services %}
 			<div class="product-list">
 				{% for s in services %}
-				<div class="product">
-					<h3>{{ s.title }}</h3>
-					<p>{{ s.description }}</p>
-					<p class="price">{{ s.price }} ₽</p>
+                                <div class="product">
+                                        <h3>{{ s.title }}</h3>
+                                        <p>{{ s.description }}</p>
+                                        <p class="details">Категория: {{ s.category }}</p>
+                                        <p class="price">{{ s.price }} ₽</p>
 					<!-- Здесь можно позже добавить кнопки “Редактировать” и “Удалить” -->
 				</div>
 				{% endfor %}
