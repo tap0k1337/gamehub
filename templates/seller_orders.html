@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Заказы продавца — GameHub</title>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles.css') }}"
+		/>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<ul>
+					<li><a href="{{ url_for('index') }}">Главная</a></li>
+					{% if session.get('role') == 'customer' %}
+					<li><a href="{{ url_for('catalog') }}">Каталог</a></li>
+					<li><a href="{{ url_for('cart') }}">Корзина</a></li>
+					<li><a href="{{ url_for('profile') }}">Профиль</a></li>
+					{% endif %} {% if session.get('role') == 'seller' %}
+					<li><a href="{{ url_for('my_services') }}">🛠 Мои услуги</a></li>
+					<li><a href="{{ url_for('seller_orders') }}">📦 Заказы</a></li>
+					{% endif %} {% if session.get('role') == 'admin' %}
+					<li><a href="{{ url_for('admin_panel') }}">🔧 Админ-панель</a></li>
+					{% endif %} {% if session.get('user_id') %}
+					<li><a href="{{ url_for('logout') }}">Выход</a></li>
+					{% else %}
+					<li><a href="{{ url_for('login') }}">Вход</a></li>
+					{% endif %}
+				</ul>
+			</nav>
+
+			<div class="user-info">
+				Здравствуйте, <strong>{{ session.username }}</strong> (роль:
+				<em>{{ session.role }}</em>)
+			</div>
+		</header>
+
+		<main>
+			<h1>Заказы моих услуг</h1>
+
+			{% if orders %}
+			<table>
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Покупатель</th>
+						<th>Дата</th>
+						<th>Статус</th>
+						<th>Действие</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for order in orders %}
+					<tr>
+						<td>#{{ order.id }}</td>
+						<td>{{ order.buyer.username }}</td>
+						<td>{{ order.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
+						<td>{{ order.status }}</td>
+						<td>
+							<!-- Форма для смены статуса -->
+							<form
+								method="POST"
+								action="{{ url_for('update_seller_order', order_id=order.id) }}"
+							>
+								{% if order.status == 'paid' %}
+								<button name="status" value="in_progress">
+									Начать выполнение
+								</button>
+								{% elif order.status == 'in_progress' %}
+								<button name="status" value="completed">Завершить</button>
+								{% else %} — {% endif %}
+							</form>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% else %}
+			<p>Нет заказов для ваших услуг.</p>
+			{% endif %}
+		</main>
+
+		<footer>
+			<p>&copy; 2025 GameHub</p>
+		</footer>
+	</body>
+</html>

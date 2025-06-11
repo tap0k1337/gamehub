@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Оплата заказа — GameHub</title>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles.css') }}"
+		/>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<ul>
+					<li><a href="{{ url_for('index') }}">Главная</a></li>
+					{% if session.get('role') == 'customer' %}
+					<li><a href="{{ url_for('catalog') }}">Каталог</a></li>
+					<li><a href="{{ url_for('cart') }}">Корзина</a></li>
+					<li><a href="{{ url_for('profile') }}">Профиль</a></li>
+					{% endif %} {% if session.get('role') == 'seller' %}
+					<li><a href="{{ url_for('my_services') }}">Мои услуги</a></li>
+					<li><a href="{{ url_for('seller_orders') }}">Заказы</a></li>
+					{% endif %} {% if session.get('role') == 'admin' %}
+					<li><a href="{{ url_for('admin_panel') }}">Админ-панель</a></li>
+					{% endif %} {% if session.get('user_id') %}
+					<li><a href="{{ url_for('logout') }}">Выход</a></li>
+					{% else %}
+					<li><a href="{{ url_for('login') }}">Вход</a></li>
+					{% endif %}
+				</ul>
+			</nav>
+			{% if session.get('user_id') %}
+			<div class="user-info">
+				Здравствуйте, <strong>{{ session.username }}</strong> {% if
+				session.get('role') %}(роль: <em>{{ session.role }}</em>){% endif %}
+			</div>
+			{% endif %}
+		</header>
+
+		<main>
+			<section class="registration">
+				<h2>Оплата заказа №{{ order_id }}</h2>
+				<form
+					method="POST"
+					action="{{ url_for('pay', order_id=order_id) }}"
+					class="payment-form"
+				>
+					<label for="card_number">Номер карты:</label>
+					<input
+						type="text"
+						id="card_number"
+						name="card_number"
+						placeholder="1234 5678 9012 3456"
+						maxlength="19"
+						required
+					/>
+
+					<label for="expiry_date">Срок действия (MM/YY):</label>
+					<input
+						type="text"
+						id="expiry_date"
+						name="expiry_date"
+						placeholder="MM/YY"
+						maxlength="5"
+						required
+					/>
+
+					<label for="cvv">CVV:</label>
+					<input
+						type="text"
+						id="cvv"
+						name="cvv"
+						placeholder="123"
+						maxlength="3"
+						required
+					/>
+
+					<button type="submit">Оплатить</button>
+				</form>
+			</section>
+		</main>
+
+		<footer>
+			<p>&copy; 2025 GameHub. Все права защищены.</p>
+		</footer>
+	</body>
+</html>

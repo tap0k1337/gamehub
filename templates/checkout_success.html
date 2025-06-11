@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ру">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Заказ оформлен</title>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles.css') }}"
+		/>
+	</head>
+	<body>
+		<header>
+			<h1 style="margin: 10px 20px; color: #f0f0f0">GameHub</h1>
+			<nav style="margin-left: 20px">
+				<a href="{{ url_for('index') }}" style="color: #f0f0f0">Главная</a>
+			</nav>
+		</header>
+
+		<main
+			class="checkout-success"
+			style="text-align: center; padding: 40px 20px"
+		>
+			<h2>✅ Спасибо за заказ!</h2>
+			<p>Номер вашего заказа: <strong>#{{ order_id }}</strong></p>
+
+			<p style="margin-top: 25px">
+				<a href="{{ url_for('pay', order_id=order_id) }}" class="checkout-link">
+					💳 Оплатить картой
+				</a>
+				&nbsp;|&nbsp;
+				<a
+					href="{{ url_for('track', order_id=order_id) }}"
+					class="checkout-link"
+				>
+					🔎 Отследить заказ
+				</a>
+			</p>
+
+			<p style="margin-top: 30px">
+				<a href="{{ url_for('catalog') }}" class="back-link">
+					🔙 Вернуться в каталог
+				</a>
+			</p>
+		</main>
+	</body>
+</html>

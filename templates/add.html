@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Добавить услугу — GameHub</title>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles.css') }}"
+		/>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<ul>
+					<li><a href="{{ url_for('index') }}">Главная</a></li>
+					{% if session.get('role') == 'seller' %}
+					<li><a href="{{ url_for('my_services') }}">Мои услуги</a></li>
+					<li><a href="{{ url_for('seller_orders') }}">Заказы</a></li>
+					{% endif %} {% if session.get('role') == 'admin' %}
+					<li><a href="{{ url_for('admin_panel') }}">Админ-панель</a></li>
+					{% endif %} {% if session.get('user_id') %}
+					<li><a href="{{ url_for('logout') }}">Выход</a></li>
+					{% else %}
+					<li><a href="{{ url_for('login') }}">Вход</a></li>
+					{% endif %}
+				</ul>
+			</nav>
+			{% if session.get('user_id') %}
+			<div class="user-info">
+				Здравствуйте, <strong>{{ session.username }}</strong> {% if
+				session.get('role') %}(роль: <em>{{ session.role }}</em>){% endif %}
+			</div>
+			{% endif %}
+		</header>
+
+		<main>
+			<h1 style="text-align: center; margin-bottom: 20px">
+				Добавление новой услуги
+			</h1>
+			<section class="registration">
+				<form method="POST" action="{{ url_for('add_service') }}">
+					<label for="title">Название услуги:</label>
+					<input
+						type="text"
+						id="title"
+						name="title"
+						placeholder="Например: 'Продажа игрового аккаунта'"
+						required
+					/>
+
+					<label for="price">Цена (₽):</label>
+					<input
+						type="number"
+						id="price"
+						name="price"
+						placeholder="1000"
+						required
+					/>
+
+					<label for="category">Категория:</label>
+					<select id="category" name="category" required>
+						<option value="" disabled selected>Выберите категорию</option>
+						<option value="game">Игра</option>
+						<option value="subscription">Подписка</option>
+						<option value="service">Услуга</option>
+					</select>
+
+					<label for="description">Описание:</label>
+					<textarea
+						id="description"
+						name="description"
+						placeholder="Кратко опишите услугу"
+						rows="4"
+						required
+					></textarea>
+
+					<button type="submit">Сохранить услугу</button>
+				</form>
+			</section>
+		</main>
+
+		<footer>
+			<p>&copy; 2025 GameHub. Все права защищены.</p>
+		</footer>
+	</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Вход — GameHub</title>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles.css') }}"
+		/>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<ul>
+					<li><a href="{{ url_for('index') }}">Главная</a></li>
+					{% if session.get('role') == 'customer' %}
+					<li><a href="{{ url_for('catalog') }}">Каталог</a></li>
+					<li><a href="{{ url_for('cart') }}">Корзина</a></li>
+					<li><a href="{{ url_for('profile') }}">Профиль</a></li>
+					{% endif %} {% if session.get('role') == 'seller' %}
+					<li><a href="{{ url_for('my_services') }}">Мои услуги</a></li>
+					<li><a href="{{ url_for('seller_orders') }}">Заказы</a></li>
+					{% endif %} {% if session.get('role') == 'admin' %}
+					<li><a href="{{ url_for('admin_panel') }}">Админ-панель</a></li>
+					{% endif %} {% if session.get('user_id') %}
+					<li><a href="{{ url_for('logout') }}">Выход</a></li>
+					{% else %}
+					<li><a href="{{ url_for('login') }}">Вход</a></li>
+					{% endif %}
+				</ul>
+			</nav>
+			{% if session.get('user_id') %}
+			<div class="user-info">
+				Здравствуйте, <strong>{{ session.username }}</strong> {% if
+				session.get('role') %}(роль: <em>{{ session.role }}</em>){% endif %}
+			</div>
+			{% endif %}
+		</header>
+
+		<main>
+			<section class="registration">
+				<h2 style="text-align: center; margin-bottom: 20px">Вход в аккаунт</h2>
+				<form method="POST" action="{{ url_for('login') }}">
+					<label for="username">Логин:</label>
+					<input
+						type="text"
+						id="username"
+						name="username"
+						placeholder="Введите логин"
+						required
+					/>
+
+					<label for="password">Пароль:</label>
+					<input
+						type="password"
+						id="password"
+						name="password"
+						placeholder="Введите пароль"
+						required
+					/>
+
+					<button type="submit">Войти</button>
+				</form>
+
+				{% if error %}
+				<p class="error" style="text-align: center">{{ error }}</p>
+				{% endif %}
+
+				<p style="text-align: center; margin-top: 15px">
+					Нет аккаунта? <a href="{{ url_for('index') }}">Зарегистрироваться</a>
+				</p>
+			</section>
+		</main>
+
+		<footer>
+			<p>&copy; 2025 GameHub</p>
+		</footer>
+	</body>
+</html>

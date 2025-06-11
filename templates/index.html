@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>GameHub — Главная</title>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles.css') }}"
+		/>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<ul>
+					<li><a href="{{ url_for('index') }}">Главная</a></li>
+					{% if session.get('role') == 'customer' %}
+					<li><a href="{{ url_for('catalog') }}">Каталог</a></li>
+					<li><a href="{{ url_for('cart') }}">Корзина</a></li>
+					<li><a href="{{ url_for('profile') }}">Профиль</a></li>
+					{% endif %} {% if session.get('role') == 'seller' %}
+					<li><a href="{{ url_for('catalog') }}">Каталог</a></li>
+					<li><a href="{{ url_for('my_services') }}">🛠 Мои услуги</a></li>
+					<li><a href="{{ url_for('seller_orders') }}">📦 Заказы</a></li>
+					{% endif %} {% if session.get('role') == 'admin' %}
+					<li><a href="{{ url_for('admin_panel') }}">🔧 Админ-панель</a></li>
+					{% endif %} {% if session.get('user_id') %}
+					<li><a href="{{ url_for('logout') }}">Выход</a></li>
+					{% else %}
+					<li><a href="{{ url_for('login') }}">Вход</a></li>
+					{% endif %}
+				</ul>
+			</nav>
+		</header>
+
+		<main>
+			<h1>Добро пожаловать в GameHub!</h1>
+
+			<section class="welcome-block">
+				<!-- Карусель -->
+				<div class="carousel">
+					<div class="carousel-inner">
+						<div class="carousel-item">
+							<img
+								src="{{ url_for('static', filename='images/fortnite.jpg') }}"
+								alt="Fortnite"
+							/>
+						</div>
+						<div class="carousel-item">
+							<img
+								src="{{ url_for('static', filename='images/steam.jpg') }}"
+								alt="Steam"
+							/>
+						</div>
+						<div class="carousel-item">
+							<img
+								src="{{ url_for('static', filename='images/lol.jpg') }}"
+								alt="LoL"
+							/>
+						</div>
+					</div>
+				</div>
+
+				<!-- Регистрация -->
+				{% if 'user_id' not in session %}
+				<section class="registration">
+					<h2>Регистрация</h2>
+					<!-- Внутри <form> в блоке .registration -->
+					<form method="POST" action="{{ url_for('index') }}">
+						<label for="username">Логин:</label>
+						<input type="text" id="username" name="username" required />
+
+						<label for="password">Пароль:</label>
+						<input type="password" id="password" name="password" required />
+
+						<label for="role">Роль:</label>
+						<select id="role" name="role" required>
+							<option value="customer">Покупатель</option>
+							<option value="seller">Продавец</option>
+						</select>
+
+						<button type="submit">Зарегистрироваться</button>
+					</form>
+
+					{% if error %}
+					<p style="color: red">{{ error }}</p>
+					{% endif %}
+
+					<p>Уже есть аккаунт? <a href="{{ url_for('login') }}">Войти</a></p>
+				</section>
+				{% else %}
+				<p>Вы вошли в систему. Приятного использования!</p>
+				{% endif %}
+			</section>
+		</main>
+
+		<div
+			id="notify"
+			class="notify"
+			style="
+				display: none;
+				position: fixed;
+				top: 10px;
+				right: 10px;
+				background: #333;
+				color: #fff;
+				padding: 10px;
+				border-radius: 5px;
+			"
+		></div>
+
+		<footer>
+			<p>&copy; 2025 GameHub. Все права защищены.</p>
+		</footer>
+
+		<script src="{{ url_for('static', filename='script.js') }}" defer></script>
+	</body>
+</html>

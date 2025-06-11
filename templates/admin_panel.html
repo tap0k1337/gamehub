@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Админ-панель</title>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles.css') }}"
+		/>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<ul>
+					<li><a href="{{ url_for('index') }}">Главная</a></li>
+					{% if session.get('role') == 'customer' %}
+					<li><a href="{{ url_for('catalog') }}">Каталог</a></li>
+					<li><a href="{{ url_for('cart') }}">Корзина</a></li>
+					<li><a href="{{ url_for('profile') }}">Профиль</a></li>
+					{% endif %} {% if session.get('role') == 'seller' %}
+					<li><a href="{{ url_for('my_services') }}">🛠 Мои услуги</a></li>
+					<li><a href="{{ url_for('seller_orders') }}">📦 Заказы</a></li>
+					{% endif %} {% if session.get('role') == 'admin' %}
+					<li><a href="{{ url_for('admin_panel') }}">🔧 Админ-панель</a></li>
+					{% endif %} {% if session.get('user_id') %}
+					<li><a href="{{ url_for('logout') }}">Выход</a></li>
+					{% else %}
+					<li><a href="{{ url_for('login') }}">Вход</a></li>
+					{% endif %}
+				</ul>
+			</nav>
+		</header>
+
+		<main>
+			<h1>Панель администратора</h1>
+
+			<h2>Пользователи</h2>
+			<ul>
+				{% for user in users %}
+				<li>{{ user.username }} — {{ user.role }}</li>
+				{% endfor %}
+			</ul>
+
+			<h2>Все услуги</h2>
+			<ul>
+				{% for s in services %}
+				<li>{{ s.title }} — {{ s.price }} руб. ({{ s.description }})</li>
+				{% endfor %}
+			</ul>
+		</main>
+	</body>
+</html>

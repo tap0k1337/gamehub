@@ -1,0 +1,523 @@
+/* static/styles.css */
+
+/* === Общие стили === */
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	background-color: #2f2f2f; /* статичный самый тёмный серый */
+	color: #f0f0f0; /* светлый текст для тёмного фона */
+	font-family: Arial, sans-serif;
+}
+
+body {
+	flex: 1;
+}
+
+/* === Header и навигация === */
+header {
+	background-color: rgba(255, 255, 255, 0.05);
+	padding: 10px 20px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+nav li {
+	margin: 0 15px;
+}
+
+nav a {
+	text-decoration: none;
+	color: #f0f0f0;
+	font-weight: bold;
+	transition: color 0.2s;
+}
+
+nav a:hover {
+	color: #ff6f61;
+}
+
+/* === Информация о пользователе в шапке === */
+.user-info {
+	text-align: center;
+	margin-top: 5px;
+	font-size: 0.9rem;
+	color: #ccc;
+}
+
+/* === Основной контейнер страниц === */
+main {
+	padding: 20px;
+	flex: 1;
+}
+
+/* === Footer === */
+footer {
+	background-color: rgba(255, 255, 255, 0.05);
+	text-align: center;
+	padding: 10px;
+	box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.3);
+	color: #ccc;
+}
+
+/* === Центрирование блоков (приветствие, формы и т.д.) === */
+.welcome-block {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	gap: 20px;
+}
+
+/* === Общий стиль кнопок === */
+button {
+	padding: 8px 16px;
+	background-color: #ff6f61;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 0.9rem;
+	transition: background 0.2s;
+}
+
+button:hover {
+	background-color: #ff8a75;
+}
+
+/* === Скрытый контейнер для уведомлений (toast) === */
+.notify {
+	display: none;
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	background: #ff6f61;
+	color: #fff;
+	padding: 10px 15px;
+	border-radius: 5px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	z-index: 1000;
+}
+
+/* === Карточки “продуктов” (старая реализация) === */
+.product-list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
+.product {
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	margin: 10px;
+	padding: 15px;
+	width: calc(33.333% - 40px);
+	box-sizing: border-box;
+	text-align: center;
+	border-radius: 10px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+	color: #fff;
+	transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+}
+
+.product img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 5px;
+	margin-bottom: 8px;
+}
+
+.product h3 {
+	margin: 10px 0;
+	font-size: 1.1rem;
+	color: #f0f0f0;
+}
+
+.product .price {
+	font-weight: bold;
+	color: #ff6f61;
+	margin: 10px 0;
+}
+
+/* === Каталог — сетка карточек === */
+.catalog-list {
+	max-width: 1000px;
+	margin: 20px auto;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	gap: 20px;
+	padding: 0 10px;
+}
+
+.catalog-item {
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+	padding: 18px 16px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	transition: transform 0.2s, box-shadow 0.2s;
+	color: #fff;
+}
+
+.catalog-item:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.catalog-item h2 {
+	font-size: 1.1rem;
+	margin-bottom: 8px;
+	color: #f0f0f0;
+}
+
+.catalog-item .price {
+	font-weight: bold;
+	margin: 4px 0 12px 0;
+	color: #ff6f61;
+}
+
+.catalog-item .details {
+	font-size: 0.9rem;
+	color: #ccc;
+	margin-bottom: 12px;
+}
+
+/* === Фильтр каталога (select) === */
+form select {
+	font-size: 1rem;
+	padding: 6px 10px;
+	border-radius: 4px;
+	border: 1px solid #555;
+	background: rgba(255, 255, 255, 0.1);
+	color: #fff;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+
+form select:hover {
+	background: rgba(255, 255, 255, 0.2);
+}
+
+/* === Форма регистрации и входа === */
+.registration {
+	background: rgba(0, 0, 0, 0.5);
+	padding: 30px 20px;
+	margin: 40px auto;
+	max-width: 400px;
+	border-radius: 10px;
+	box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+	text-align: left;
+	width: 100%;
+}
+
+.registration h2 {
+	text-align: center;
+	font-size: 1.5em;
+	color: #f0f0f0;
+	margin-bottom: 20px;
+}
+
+.registration form {
+	display: flex;
+	flex-direction: column;
+}
+
+.registration label {
+	margin-top: 10px;
+	font-weight: bold;
+	color: #ddd;
+}
+
+.registration input,
+.registration select,
+.registration textarea {
+	padding: 8px;
+	margin-top: 5px;
+	border: 1px solid #555;
+	border-radius: 5px;
+	background: rgba(255, 255, 255, 0.1);
+	color: #fff;
+}
+
+.registration input::placeholder,
+.registration textarea::placeholder {
+	color: #aaa;
+}
+
+.registration button {
+	margin-top: 20px;
+	padding: 10px;
+	background-color: #ff6f61;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background 0.3s;
+}
+
+.registration button:hover {
+	background-color: #ff8a75;
+}
+
+.registration a {
+	color: #ff6f61;
+	text-decoration: none;
+	margin-top: 15px;
+}
+
+.registration a:hover {
+	text-decoration: underline;
+}
+
+.error {
+	color: #ff6f61;
+	font-size: 0.9em;
+	margin-top: 10px;
+	text-align: center;
+}
+
+/* === Форма оплаты === */
+form.payment-form input {
+	padding: 8px;
+	margin-top: 5px;
+	border: 1px solid #555;
+	border-radius: 5px;
+	background: rgba(255, 255, 255, 0.1);
+	color: #fff;
+	width: 100%;
+}
+
+form.payment-form label {
+	margin-top: 15px;
+	font-weight: bold;
+	color: #ddd;
+}
+
+/* === Таблицы (админ, профиль, заказы продавца) === */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+th,
+td {
+	padding: 12px 15px;
+	text-align: left;
+}
+
+thead {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+thead th {
+	color: #f0f0f0;
+	font-size: 1rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+tbody tr {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	transition: background 0.2s;
+}
+
+tbody tr:nth-child(even) {
+	background-color: rgba(255, 255, 255, 0.05);
+}
+
+tbody tr:hover {
+	background-color: rgba(255, 255, 255, 0.15);
+}
+
+td {
+	color: #eee;
+	font-size: 0.95rem;
+}
+
+/* === Кнопка “Отследить” в таблице === */
+.track-button {
+	padding: 6px 12px;
+	background-color: #ff6f61;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	font-size: 0.9rem;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+
+.track-button:hover {
+	background-color: #ff8a75;
+}
+
+/* === Пустое состояние === */
+.profile-empty,
+.no-services {
+	margin-top: 40px;
+	font-size: 1.1rem;
+	color: #eee;
+	text-align: center;
+}
+
+/* === Адаптивность === */
+@media (max-width: 768px) {
+	.product {
+		width: calc(50% - 40px);
+	}
+	table,
+	.catalog-list {
+		font-size: 0.9rem;
+	}
+}
+
+@media (max-width: 480px) {
+	nav ul {
+		flex-direction: column;
+		align-items: center;
+	}
+	.product {
+		width: calc(100% - 40px);
+	}
+	.catalog-list {
+		grid-template-columns: 1fr;
+		padding: 0 5px;
+	}
+	.catalog-item {
+		padding: 14px 12px;
+	}
+	.catalog-item h2 {
+		font-size: 1rem;
+	}
+	.catalog-item .details,
+	.catalog-item .price {
+		font-size: 0.85rem;
+	}
+	.catalog-item button {
+		padding: 7px 14px;
+		font-size: 0.85rem;
+	}
+	header,
+	footer {
+		padding: 10px;
+	}
+	.registration {
+		padding: 20px 15px;
+		margin: 20px auto;
+	}
+	.registration h2 {
+		font-size: 1.3rem;
+	}
+	form.payment-form input {
+		padding: 6px;
+	}
+}
+
+/* === Пользовательские цвета для имён/ролей === */
+.user-name {
+	font-weight: bold;
+	color: #28a745;
+}
+
+.user-role {
+	font-weight: bold;
+	color: #007bff;
+}
+.carousel {
+	position: relative;
+	overflow: hidden;
+	width: 80px; /* уменьшили ширину контейнера */
+	height: auto;
+	margin: 0 auto;
+}
+
+.carousel-inner {
+	max-width: 320px; /* уменьшили максимальную ширину для слайдов */
+	width: 100%;
+	margin: 0 auto;
+}
+
+.carousel-item {
+	display: none;
+	width: 100%;
+}
+
+.carousel-item img {
+	width: 100%;
+	height: auto;
+	border-radius: 8px;
+}
+
+/* === Исправление выпадающего списка === */
+form select {
+	font-size: 1rem;
+	padding: 6px 10px;
+	border-radius: 4px;
+	border: 1px solid #555;
+	background: rgba(
+		255,
+		255,
+		255,
+		0.2
+	); /* чуть светлее фон, чтобы белый текст был виден */
+	color: #000; /* чёрный цвет текста в закрытом состоянии */
+	cursor: pointer;
+	transition: background 0.2s;
+}
+
+/* Когда селект открыт, опции по умолчанию могут оказаться на светлом фоне, поэтому подправим их */
+form select option {
+	background-color: #2f2f2f; /* тёмный фон для опций */
+	color: #f0f0f0; /* светлый текст внутри опций */
+}
+
+/* Ховер для select—чтобы фон становился чуть светлее при наведении */
+form select:hover {
+	background: rgba(255, 255, 255, 0.3);
+}
+.checkout-success .checkout-link {
+	color: #ff6f61; /* контрастный коралловый */
+	text-decoration: none;
+	font-weight: bold;
+	transition: color 0.2s;
+}
+
+.checkout-success .checkout-link:hover {
+	color: #ff8a75;
+	text-decoration: underline;
+}
+
+/* Ссылка “Вернуться в каталог” */
+.checkout-success .back-link {
+	display: inline-block;
+	margin-top: 15px;
+	color: #4fc3f7; /* небесно-голубой */
+	font-weight: bold;
+	text-decoration: none;
+	transition: color 0.2s;
+}
+
+.checkout-success .back-link:hover {
+	color: #80d6ff;
+	text-decoration: underline;
+}

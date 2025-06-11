@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Магазин игр - Корзина</title>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles.css') }}"
+		/>
+		<script src="{{ url_for('static', filename='script.js') }}" defer></script>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<ul>
+					<li><a href="{{ url_for('index') }}">Главная</a></li>
+					{% if session.get('role') == 'customer' %}
+					<li><a href="{{ url_for('catalog') }}">Каталог</a></li>
+					<li><a href="{{ url_for('cart') }}">Корзина</a></li>
+					<li><a href="{{ url_for('profile') }}">Профиль</a></li>
+					{% endif %} {% if session.get('role') == 'seller' %}
+					<li><a href="{{ url_for('my_services') }}">🛠 Мои услуги</a></li>
+					<li><a href="{{ url_for('seller_orders') }}">📦 Заказы</a></li>
+					{% endif %} {% if session.get('role') == 'admin' %}
+					<li><a href="{{ url_for('admin_panel') }}">🔧 Админ-панель</a></li>
+					{% endif %} {% if session.get('user_id') %}
+					<li><a href="{{ url_for('logout') }}">Выход</a></li>
+					{% else %}
+					<li><a href="{{ url_for('login') }}">Вход</a></li>
+					{% endif %}
+				</ul>
+			</nav>
+		</header>
+
+		<main>
+			<h1>Корзина</h1>
+			<ul id="cart-items"></ul>
+			<p>Итог: <span id="cart-total">0</span> руб.</p>
+
+			<form method="POST" action="{{ url_for('checkout') }}">
+				<input type="hidden" id="cart-data" name="cart_data" />
+				<button type="submit">Оформить заказ</button>
+			</form>
+		</main>
+
+		<div id="notify" class="notify"></div>
+
+		<footer>
+			<p>&copy; 2025 Магазин игр. Все права защищены.</p>
+		</footer>
+	</body>
+</html>

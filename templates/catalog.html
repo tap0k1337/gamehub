@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Каталог — GameHub</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('index') }}">Главная</a></li>
+        {% if session.get('role') == 'customer' %}
+          <li><a href="{{ url_for('catalog') }}">Каталог</a></li>
+          <li><a href="{{ url_for('cart') }}">Корзина</a></li>
+          <li><a href="{{ url_for('profile') }}">Профиль</a></li>
+        {% endif %}
+        {% if session.get('role') == 'seller' %}
+          <li><a href="{{ url_for('my_services') }}">🛠 Мои услуги</a></li>
+          <li><a href="{{ url_for('seller_orders') }}">📦 Заказы</a></li>
+        {% endif %}
+        {% if session.get('role') == 'admin' %}
+          <li><a href="{{ url_for('admin_panel') }}">🔧 Админ-панель</a></li>
+        {% endif %}
+        {% if session.get('user_id') %}
+          <li><a href="{{ url_for('logout') }}">Выход</a></li>
+        {% else %}
+          <li><a href="{{ url_for('login') }}">Вход</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% if session.get('user_id') %}
+      <div class="user-info">
+        Здравствуйте, <strong>{{ session.username }}</strong>
+        {% if session.get('role') %}(роль: <em>{{ session.role }}</em>){% endif %}
+      </div>
+    {% endif %}
+  </header>
+
+  <main>
+    <h1 style="text-align: center; margin-bottom: 20px;">Каталог услуг</h1>
+
+    <!-- Фильтр по категории -->
+    <form method="GET" action="{{ url_for('catalog') }}" style="text-align: center; margin-bottom: 25px;">
+      <label for="category_filter" style="font-weight: bold; margin-right: 8px;">Категория:</label>
+      <select id="category_filter" name="category" onchange="this.form.submit()" style="padding: 6px 10px; border-radius: 4px; border: 1px solid #ccc;">
+        <option value="all" {% if selected_category == 'all' %}selected{% endif %}>Все</option>
+        <option value="game" {% if selected_category == 'game' %}selected{% endif %}>Игра</option>
+        <option value="subscription" {% if selected_category == 'subscription' %}selected{% endif %}>Подписка</option>
+        <option value="service" {% if selected_category == 'service' %}selected{% endif %}>Услуга</option>
+      </select>
+    </form>
+
+    {% if services %}
+      <section class="catalog-list">
+        {% for s in services %}
+          <div class="catalog-item">
+            <h2>{{ s.title }}</h2>
+            <p class="price">{{ s.price }} ₽</p>
+            <p class="details">Категория: {{ s.category }} • Продавец: {{ s.user.username }}</p>
+            {% if review_stats[s.id]['avg'] %}
+              <p class="details">⭐ {{ review_stats[s.id]['avg'] }} / 5 ({{ review_stats[s.id]['count'] }})</p>
+            {% else %}
+              <p class="details">Нет отзывов</p>
+            {% endif %}
+            {% if session.get('role') == 'customer' %}
+		  <<button
+		  onclick="addToCart({{ s.id }}, '{{ s.title|e }}', {{ s.price }})"
+	  >
+		  В корзину
+	  </button>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </section>
+    {% else %}
+      <p style="text-align: center; margin-top: 40px;">По выбранной категории ничего не найдено.</p>
+    {% endif %}
+  </main>
+
+  <div id="notify" class="notify"></div>
+
+  <footer>
+    <p>&copy; 2025 GameHub. Все права защищены.</p>
+  </footer>
+</body>
+</html>

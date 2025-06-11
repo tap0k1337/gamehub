@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Трекер заказа #{{ order_id }}</title>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles.css') }}"
+		/>
+	</head>
+	<body>
+		<header>
+			<nav><a href="{{ url_for('index') }}">Главная</a></nav>
+		</header>
+		<main>
+			<h1>Заказ №{{ order_id }}</h1>
+			<p>Текущий статус: <strong>{{ status }}</strong></p>
+			{% if status == 'pending' %}
+			<p>Мы ждём оплаты.</p>
+			{% elif status == 'paid' %}
+			<p>Заказ оплачен — продавец приступил к выполнению.</p>
+			{% else %}
+			<p>Статус: {{ status }}</p>
+			{% endif %}
+		</main>
+	</body>
+</html>

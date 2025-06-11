@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Мои услуги — GameHub</title>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles.css') }}"
+		/>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<ul>
+					<li><a href="{{ url_for('index') }}">Главная</a></li>
+					{% if session.get('role') == 'seller' %}
+					<li><a href="{{ url_for('my_services') }}">Мои услуги</a></li>
+					<li><a href="{{ url_for('seller_orders') }}">Заказы</a></li>
+					{% endif %} {% if session.get('role') == 'admin' %}
+					<li><a href="{{ url_for('admin_panel') }}">Админ-панель</a></li>
+					{% endif %} {% if session.get('user_id') %}
+					<li><a href="{{ url_for('logout') }}">Выход</a></li>
+					{% else %}
+					<li><a href="{{ url_for('login') }}">Вход</a></li>
+					{% endif %}
+				</ul>
+			</nav>
+			{% if session.get('user_id') %}
+			<div class="user-info">
+				Здравствуйте, <strong>{{ session.username }}</strong> {% if
+				session.get('role') %}(роль: <em>{{ session.role }}</em>){% endif %}
+			</div>
+			{% endif %}
+		</header>
+
+		<main>
+			<h1 style="text-align: center; margin-bottom: 20px">Мои услуги</h1>
+
+			<div style="text-align: center; margin-bottom: 15px">
+				<a
+					href="{{ url_for('add_service') }}"
+					style="font-size: 0.9rem; color: #ff6f61; text-decoration: none"
+				>
+					➕ Добавить услугу
+				</a>
+			</div>
+
+			{% if services %}
+			<div class="product-list">
+				{% for s in services %}
+				<div class="product">
+					<h3>{{ s.title }}</h3>
+					<p>{{ s.description }}</p>
+					<p class="price">{{ s.price }} ₽</p>
+					<!-- Здесь можно позже добавить кнопки “Редактировать” и “Удалить” -->
+				</div>
+				{% endfor %}
+			</div>
+			{% else %}
+			<p style="text-align: center; margin-top: 40px">
+				Вы ещё не добавили ни одной услуги.
+			</p>
+			{% endif %}
+		</main>
+
+		<footer>
+			<p>&copy; 2025 GameHub. Все права защищены.</p>
+		</footer>
+	</body>
+</html>
