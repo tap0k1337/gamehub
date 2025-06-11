@@ -1,4 +1,5 @@
 /* static/styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
 /* === Общие стили === */
 html,
@@ -9,11 +10,11 @@ body {
         display: flex;
         flex-direction: column;
         color: #f0f0f0; /* светлый текст для тёмного фона */
-        font-family: Arial, sans-serif;
+        font-family: 'Share Tech Mono', monospace;
 }
 
 html {
-        background-color: #2f2f2f; /* тёмный фон */
+        background-color: #0d0a1a; /* тёмный фон */
 }
 
 body {
@@ -28,11 +29,11 @@ body::before {
         inset: 0;
         pointer-events: none;
         z-index: -1;
-        background-color: #2f2f2f;
+        background-color: #0d0a1a;
         background-image: repeating-linear-gradient(
                 to right,
-                rgba(0, 255, 255, 0.15) 0,
-                rgba(0, 255, 255, 0.15) 2px,
+                rgba(255, 0, 195, 0.15) 0,
+                rgba(255, 0, 195, 0.15) 2px,
                 transparent 2px,
                 transparent 80px
         );
@@ -76,7 +77,7 @@ nav a {
 }
 
 nav a:hover {
-	color: #ff6f61;
+	color: #00e0ff;
 }
 
 /* === Информация о пользователе в шапке === */
@@ -114,7 +115,7 @@ footer {
 /* === Общий стиль кнопок === */
 button {
 	padding: 8px 16px;
-	background-color: #ff6f61;
+	background-color: #00e0ff;
 	color: #fff;
 	border: none;
 	border-radius: 5px;
@@ -124,7 +125,7 @@ button {
 }
 
 button:hover {
-	background-color: #ff8a75;
+	background-color: #66fcf1;
 }
 
 /* === Скрытый контейнер для уведомлений (toast) === */
@@ -133,7 +134,7 @@ button:hover {
 	position: fixed;
 	top: 20px;
 	right: 20px;
-	background: #ff6f61;
+	background: #00e0ff;
 	color: #fff;
 	padding: 10px 15px;
 	border-radius: 5px;
@@ -182,7 +183,7 @@ button:hover {
 
 .product .price {
 	font-weight: bold;
-	color: #ff6f61;
+	color: #00e0ff;
 	margin: 10px 0;
 }
 
@@ -222,7 +223,7 @@ button:hover {
 .catalog-item .price {
 	font-weight: bold;
 	margin: 4px 0 12px 0;
-	color: #ff6f61;
+	color: #00e0ff;
 }
 
 .catalog-item .details {
@@ -296,7 +297,7 @@ form select:hover {
 .registration button {
 	margin-top: 20px;
 	padding: 10px;
-	background-color: #ff6f61;
+	background-color: #00e0ff;
 	color: #fff;
 	border: none;
 	border-radius: 5px;
@@ -305,11 +306,11 @@ form select:hover {
 }
 
 .registration button:hover {
-	background-color: #ff8a75;
+	background-color: #66fcf1;
 }
 
 .registration a {
-	color: #ff6f61;
+	color: #00e0ff;
 	text-decoration: none;
 	margin-top: 15px;
 }
@@ -319,7 +320,7 @@ form select:hover {
 }
 
 .error {
-	color: #ff6f61;
+	color: #00e0ff;
 	font-size: 0.9em;
 	margin-top: 10px;
 	text-align: center;
@@ -389,7 +390,7 @@ td {
 /* === Кнопка “Отследить” в таблице === */
 .track-button {
 	padding: 6px 12px;
-	background-color: #ff6f61;
+	background-color: #00e0ff;
 	color: #fff;
 	border: none;
 	border-radius: 5px;
@@ -399,7 +400,7 @@ td {
 }
 
 .track-button:hover {
-	background-color: #ff8a75;
+	background-color: #66fcf1;
 }
 
 /* === Пустое состояние === */
@@ -527,14 +528,14 @@ form select:hover {
 	background: rgba(255, 255, 255, 0.3);
 }
 .checkout-success .checkout-link {
-	color: #ff6f61; /* контрастный коралловый */
+	color: #00e0ff; /* контрастный коралловый */
 	text-decoration: none;
 	font-weight: bold;
 	transition: color 0.2s;
 }
 
 .checkout-success .checkout-link:hover {
-	color: #ff8a75;
+	color: #66fcf1;
 	text-decoration: underline;
 }
 
@@ -552,3 +553,10 @@ form select:hover {
 	color: #80d6ff;
 	text-decoration: underline;
 }
+
+/* === Cyberpunk text effect === */
+.cyberpunk-text {
+        font-family: "Share Tech Mono", monospace;
+        text-shadow: 0 0 2px #00e0ff, 0 0 5px #00e0ff, 0 0 8px #ff00c3;
+}
+

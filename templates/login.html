@@ -8,7 +8,9 @@
 			rel="stylesheet"
 			href="{{ url_for('static', filename='styles.css') }}"
 		/>
-	</head>
+                <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+                <script src="{{ url_for('static', filename='cyberpunk.js') }}" defer></script>
+        </head>
 	<body>
 		<header>
 			<nav>
@@ -40,7 +42,7 @@
 
 		<main>
 			<section class="registration">
-				<h2 style="text-align: center; margin-bottom: 20px">Вход в аккаунт</h2>
+                                <h2 class="cyberpunk-text" style="text-align: center; margin-bottom: 20px">Вход в аккаунт</h2>
 				<form method="POST" action="{{ url_for('login') }}">
 					<label for="username">Логин:</label>
 					<input
