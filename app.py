@@ -33,6 +33,7 @@ class Service(db.Model):
     title       = db.Column(db.String(100), nullable=False)
     price       = db.Column(db.Integer, nullable=False)
     description = db.Column(db.Text, nullable=False)
+    category    = db.Column(db.String(20), nullable=False, default='service')
     user_id     = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user        = db.relationship('User', backref='services')
 
@@ -123,13 +124,17 @@ def logout():
 # === Каталог ===
 @app.route('/catalog')
 def catalog():
-    services = Service.query.all()
+    selected_category = request.args.get('category', 'all')
+    if selected_category == 'all':
+        services = Service.query.all()
+    else:
+        services = Service.query.filter_by(category=selected_category).all()
     review_stats = {}
     for s in services:
         ratings = [r.rating for r in s.reviews]
         avg = round(sum(ratings)/len(ratings),1) if ratings else None
         review_stats[s.id] = {'avg': avg, 'count': len(ratings)}
-    return render_template('catalog.html', services=services, review_stats=review_stats)
+    return render_template('catalog.html', services=services, review_stats=review_stats, selected_category=selected_category)
 
 # === Отзывы ===
 @app.route('/review/<int:service_id>', methods=['GET','POST'])
@@ -217,6 +222,7 @@ def add_service():
             title=request.form['title'],
             price=int(request.form['price']),
             description=request.form['description'],
+            category=request.form.get('category', 'service'),
             user_id=session['user_id']
         )
         db.session.add(new_service)

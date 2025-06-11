@@ -1,7 +1,13 @@
 from app import db, app, User, Service, Review, Order
+import os
+
+DB_PATH = os.path.join(app.instance_path, 'gamehub.db')
 
 if __name__ == '__main__':
     with app.app_context():
+        if os.path.exists(DB_PATH):
+            os.remove(DB_PATH)
+            print("🗑 Старый файл базы удалён")
         db.create_all()
         print("✅ Таблицы успешно созданы.")
 
